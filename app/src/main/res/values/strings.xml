@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Sahathana Home Care</string>
+
+    <string name="sign_up_email_hint">Email</string>
+    <string name="sign_up_name_hint">Full Name</string>
+    <string name="sign_up_phno_hint">Phone Number</string>
+    <string name="sign_up_password_hint">Password</string>
+
+</resources>

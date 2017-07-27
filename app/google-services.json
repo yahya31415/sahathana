@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "158827905925",
+    "firebase_url": "https://sahathana-df613.firebaseio.com",
+    "project_id": "sahathana-df613",
+    "storage_bucket": "sahathana-df613.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158827905925:android:b4a01ffce9da086b",
+        "android_client_info": {
+          "package_name": "co.cropbit.sahathanahomecare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "158827905925-bft1ns9d65eskqc46thjd39otuarjh50.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjmKN4bjjwKDTia-iL79XPendKYGx5RYc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
