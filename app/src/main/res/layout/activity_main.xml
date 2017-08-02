@@ -40,4 +40,12 @@
         android:backgroundTint="@color/colorAccent"
         android:onClick="login"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Request"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="request"/>
+
 </LinearLayout>
