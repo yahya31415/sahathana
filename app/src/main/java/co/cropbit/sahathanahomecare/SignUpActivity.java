@@ -1,5 +1,7 @@
 package co.cropbit.sahathanahomecare;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,12 +23,15 @@ public class SignUpActivity extends AppCompatActivity {
     private String name;
     private String phno;
 
+    private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
         setContentView(R.layout.activity_sign_up);
+        context = this;
     }
 
     public void signUp(View view) {
@@ -34,12 +39,13 @@ public class SignUpActivity extends AppCompatActivity {
         password = ((EditText) findViewById(R.id.sign_up_password)).getText().toString();
         name = ((EditText) findViewById(R.id.sign_up_name)).getText().toString();
         phno = ((EditText) findViewById(R.id.sign_up_phno)).getText().toString();
-        Log.d("Test", email);
         mAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 mDatabase.getReference("user").child(authResult.getUser().getUid()).child("name").setValue(name);
                 mDatabase.getReference("user").child(authResult.getUser().getUid()).child("phno").setValue(phno);
+                Intent intent = new Intent(context, RequestActivity.class);
+                startActivity(intent);
             }
         });
     }

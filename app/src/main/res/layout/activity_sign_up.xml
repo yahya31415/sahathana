@@ -10,6 +10,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingLeft="16dp"
+        android:paddingTop="72dp"
+        android:paddingRight="72dp"
         android:background="@color/colorPrimary">
         <FrameLayout
             android:layout_width="match_parent"
@@ -18,9 +21,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <ImageView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="240dp" />
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="16dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Create a new account"
+                        android:textSize="20sp"
+                        android:paddingLeft="16dp"
+                        android:layout_marginTop="24dp"
+                        android:textColor="@android:color/white"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sahathana"
+                        android:textSize="32sp"
+                        android:paddingLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif-black"
+                        android:textColor="@android:color/white"/>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

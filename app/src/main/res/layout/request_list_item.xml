@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:id="@+id/list_content"
+        android:text="ghch jghgc gfhgfhgv tfhgf jhgvhgvhgcfg jhgjhgfhtgv"
+        android:padding="8dp"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/list_stat"
+        android:textAlignment="center"
+        android:padding="8dp"
+        android:textAllCaps="true"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="sent"
+        android:layout_gravity="center_vertical"
+        />
+</LinearLayout>

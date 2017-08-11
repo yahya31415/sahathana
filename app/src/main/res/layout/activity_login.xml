@@ -5,17 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="co.cropbit.sahathanahomecare.LoginActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingRight="72dp"
+    android:paddingTop="32dp"
+    android:paddingLeft="16dp"
+    android:background="@color/colorPrimary">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Log In To"
+            android:textSize="20sp"
+            android:paddingLeft="16dp"
+            android:layout_marginTop="24dp"
+            android:textColor="@android:color/white"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sahathana"
+            android:textSize="32sp"
+            android:paddingLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_marginTop="32dp">
         <EditText
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
             android:hint="@string/sign_up_email_hint"
-            android:backgroundTint="@android:color/background_dark"
+            android:backgroundTint="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textColor="@android:color/white"
             android:id="@+id/login_email"/>
     </LinearLayout>
     <LinearLayout
@@ -27,7 +56,9 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:hint="@string/sign_up_password_hint"
-            android:backgroundTint="@android:color/background_dark"
+            android:backgroundTint="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textColor="@android:color/white"
             android:inputType="textPassword"
             android:id="@+id/login_password"/>
     </LinearLayout>
@@ -38,8 +69,34 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="@color/colorPrimaryDark"
+            android:backgroundTint="@android:color/white"
+            android:textColor="@color/colorPrimaryDark"
+            android:elevation="4dp"
             android:text="Log In"
             android:onClick="login"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Or"
+            android:textSize="20sp"
+            android:paddingLeft="24dp"
+            android:layout_marginTop="24dp"
+            android:textColor="@android:color/white"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@android:color/white"
+            android:textColor="@color/colorPrimaryDark"
+            android:elevation="4dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Create a new account"
+            android:onClick="signup"/>
     </LinearLayout>
 </LinearLayout>
