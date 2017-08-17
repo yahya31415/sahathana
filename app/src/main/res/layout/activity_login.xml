@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.cropbit.sahathanahomecare.LoginActivity"
+    tools:context="co.cropbit.sahathanahomecare.activity.LoginActivity"
     android:orientation="vertical"
     android:paddingRight="72dp"
     android:paddingTop="32dp"

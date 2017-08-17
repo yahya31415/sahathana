@@ -1,10 +1,9 @@
-package co.cropbit.sahathanahomecare;
+package co.cropbit.sahathanahomecare.activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -12,6 +11,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+
+import co.cropbit.sahathanahomecare.R;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -44,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onSuccess(AuthResult authResult) {
                 mDatabase.getReference("user").child(authResult.getUser().getUid()).child("name").setValue(name);
                 mDatabase.getReference("user").child(authResult.getUser().getUid()).child("phno").setValue(phno);
-                Intent intent = new Intent(context, RequestActivity.class);
+                Intent intent = new Intent(context, HomeActivity.class);
                 startActivity(intent);
             }
         });

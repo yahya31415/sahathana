@@ -11,10 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignUpActivity" android:theme="@style/HomeTheme" />
-        <activity android:name=".LoginActivity" android:theme="@style/HomeTheme" />
-        <activity android:name=".RequestActivity"
-            android:label="Sahathana">
+        <activity
+            android:name=".activity.SignUpActivity"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".activity.HomeActivity"
+            android:label="Sahathana"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,10 +32,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAjmKN4bjjwKDTia-iL79XPendKYGx5RYc" />
 
-        <activity android:name=".HomeActivity"
-            android:theme="@style/HomeTheme">
-
-        </activity>
+        <activity
+            android:name=".activity.SwipeActivity"
+            android:theme="@style/HomeTheme"></activity>
+        <activity android:name=".activity.ListActivity"></activity>
     </application>
 
 </manifest>

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import co.cropbit.sahathanahomecare.R;
+import co.cropbit.sahathanahomecare.RequestAdapter;
 import co.cropbit.sahathanahomecare.model.Request;
 
 public class RequestFragment extends Fragment {
@@ -126,46 +127,5 @@ public class RequestFragment extends Fragment {
         loading_text_view.setText(lt);
         ContentLoadingProgressBar contentLoadingProgressBar = (ContentLoadingProgressBar) getActivity().findViewById(R.id.indicator);
         contentLoadingProgressBar.setVisibility(b ? View.VISIBLE : View.INVISIBLE);
-    }
-
-    class RequestAdapter extends BaseAdapter {
-        ArrayList<Request> requests;
-        Context context;
-        LayoutInflater layoutInflater;
-
-        public RequestAdapter(Context context, ArrayList<Request> requests) {
-            Log.v("test", requests.toString());
-            this.context = context;
-            layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            this.requests = requests;
-        }
-
-        @Override
-        public int getCount() {
-            return requests.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return requests.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            View result = layoutInflater.inflate(R.layout.request_list_item, viewGroup, false);
-
-            TextView content = result.findViewById(R.id.list_content);
-            TextView status = result.findViewById(R.id.list_stat);
-
-            Request request = (Request) getItem(i);
-            content.setText(new Date(request.datetime).toString());
-            status.setText(request.statusString());
-            return result;
-        }
     }
 }

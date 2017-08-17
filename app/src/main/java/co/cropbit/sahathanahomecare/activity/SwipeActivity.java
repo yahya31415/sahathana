@@ -1,4 +1,4 @@
-package co.cropbit.sahathanahomecare;
+package co.cropbit.sahathanahomecare.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -28,11 +28,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import co.cropbit.sahathanahomecare.R;
 import co.cropbit.sahathanahomecare.fragment.RequestFragment;
 import co.cropbit.sahathanahomecare.fragment.SwipeFragment;
 import co.cropbit.sahathanahomecare.model.Request;
 
-public class HomeActivity extends AppCompatActivity {
+public class SwipeActivity extends AppCompatActivity {
 
     ViewPager mViewPager;
     PagerAdapter pagerAdapter;
@@ -57,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_swipe);
 
         mContext = this;
 

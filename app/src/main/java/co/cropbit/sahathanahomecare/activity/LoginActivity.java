@@ -1,4 +1,4 @@
-package co.cropbit.sahathanahomecare;
+package co.cropbit.sahathanahomecare.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.widget.EditText;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import co.cropbit.sahathanahomecare.R;
 
 public class LoginActivity extends AppCompatActivity {
 
