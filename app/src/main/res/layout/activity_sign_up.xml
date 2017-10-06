@@ -1,119 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.cropbit.sahathanahomecare.activity.SignUpActivity">
-
-    <ScrollView
+    tools:context="co.cropbit.sahathanahomecare.activity.SignUpActivity"
+    android:orientation="vertical"
+    android:background="@color/colorBackground"
+    android:padding="16dp">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login to request medical care"
+            android:textSize="14sp"
+            android:alpha="0.56"
+            android:textColor="@android:color/black"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Full Name"
+            android:fontFamily="sans-serif-light"
+            android:textSize="20sp"
+            android:alpha="0.87"
+            android:backgroundTint="@android:color/transparent"
+            android:textColorHint="@android:color/black"
+            android:textColor="@android:color/black"
+            android:id="@+id/login_name"/>
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="16dp"
-        android:paddingTop="72dp"
-        android:paddingRight="72dp"
-        android:background="@color/colorPrimary">
-        <FrameLayout
+        android:layout_height="wrap_content">
+        <Button
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="16dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Create a new account"
-                        android:textSize="20sp"
-                        android:paddingLeft="16dp"
-                        android:layout_marginTop="24dp"
-                        android:textColor="@android:color/white"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Sahathana"
-                        android:textSize="32sp"
-                        android:paddingLeft="16dp"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="sans-serif-black"
-                        android:textColor="@android:color/white"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
-                    <EditText
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:textColorHint="@android:color/white"
-                        android:backgroundTint="@android:color/white"
-                        android:textColor="@android:color/white"
-                        android:hint="@string/sign_up_email_hint"
-                        android:id="@+id/sign_up_email"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
-                    <EditText
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:textColorHint="@android:color/white"
-                        android:backgroundTint="@android:color/white"
-                        android:textColor="@android:color/white"
-                        android:hint="@string/sign_up_password_hint"
-                        android:inputType="textPassword"
-                        android:id="@+id/sign_up_password"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
-                    <EditText
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:textColorHint="@android:color/white"
-                        android:backgroundTint="@android:color/white"
-                        android:textColor="@android:color/white"
-                        android:hint="@string/sign_up_name_hint"
-                        android:id="@+id/sign_up_name"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
-                    <EditText
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:textColorHint="@android:color/white"
-                        android:backgroundTint="@android:color/white"
-                        android:textColor="@android:color/white"
-                        android:hint="@string/sign_up_phno_hint"
-                        android:id="@+id/sign_up_phno"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:backgroundTint="@android:color/white"
-                        android:text="Sign Up"
-                        android:onClick="signUp"/>
-                </LinearLayout>
-            </LinearLayout>
-        </FrameLayout>
-    </ScrollView>
-
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:elevation="4dp"
+            android:text="Login"
+            android:onClick="login"
+            android:id="@+id/login_button_final"/>
+    </LinearLayout>
 </LinearLayout>

@@ -3,6 +3,7 @@ package co.cropbit.sahathanahomecare.activity;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,13 +53,20 @@ public class ListActivity extends AppCompatActivity {
 
     private void setList(FirebaseUser user) {
         adapter = new RequestAdapter(this, requestList);
-        mDatabase.getReference("request").child(user.getUid()).addChildEventListener(new ChildEventListener() {
+        mDatabase.getReference("requests").child(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Request request = dataSnapshot.getValue(Request.class);
+                final Request request = dataSnapshot.getValue(Request.class);
+                Log.v("debug", request.toString());
                 request.key = dataSnapshot.getKey();
-                requestList.add(request);
-                adapter.notifyDataSetChanged();
+                request.setApproved(mDatabase.getReference("users"), new Runnable() {
+                    @Override
+                    public void run() {
+                        final Request r = request;
+                        requestList.add(r);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
             }
 
             @Override

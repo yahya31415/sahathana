@@ -6,97 +6,48 @@
     android:layout_height="match_parent"
     tools:context="co.cropbit.sahathanahomecare.activity.LoginActivity"
     android:orientation="vertical"
-    android:paddingRight="72dp"
-    android:paddingTop="32dp"
-    android:paddingLeft="16dp"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorBackground"
+    android:padding="16dp">
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Log In To"
+            android:text="Login to request medical care"
+            android:alpha="0.56"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Mobile Number"
+            android:fontFamily="sans-serif-light"
             android:textSize="20sp"
-            android:paddingLeft="16dp"
-            android:layout_marginTop="24dp"
-            android:textColor="@android:color/white"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sahathana"
-            android:textSize="32sp"
-            android:paddingLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="sans-serif-black"
-            android:textColor="@android:color/white"/>
+            android:alpha="0.87"
+            android:backgroundTint="@android:color/transparent"
+            android:textColorHint="@android:color/black"
+            android:textColor="@android:color/black"
+            android:id="@+id/login_phno"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:layout_marginTop="32dp">
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:hint="@string/sign_up_email_hint"
-            android:backgroundTint="@android:color/white"
-            android:textColorHint="@android:color/white"
-            android:textColor="@android:color/white"
-            android:id="@+id/login_email"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:hint="@string/sign_up_password_hint"
-            android:backgroundTint="@android:color/white"
-            android:textColorHint="@android:color/white"
-            android:textColor="@android:color/white"
-            android:inputType="textPassword"
-            android:id="@+id/login_password"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
         <Button
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@android:color/white"
-            android:textColor="@color/colorPrimaryDark"
-            android:elevation="4dp"
-            android:text="Log In"
-            android:onClick="login"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Or"
-            android:textSize="20sp"
-            android:paddingLeft="24dp"
-            android:layout_marginTop="24dp"
-            android:textColor="@android:color/white"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@android:color/white"
-            android:textColor="@color/colorPrimaryDark"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@color/colorBackground"
             android:elevation="4dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Create a new account"
-            android:onClick="signup"/>
+            android:text="Send OTP"
+            android:onClick="login"
+            android:id="@+id/login_button"/>
     </LinearLayout>
 </LinearLayout>

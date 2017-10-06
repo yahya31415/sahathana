@@ -1,27 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="8dp"
+    android:background="#DEDEDE">
+    <android.support.v7.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        card_view:cardBackgroundColor="@android:color/white"
+        card_view:contentPadding="8dp"
+        card_view:cardElevation="4dp"
+        android:id="@+id/list_card">
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:id="@+id/list_content"
-        android:text="ghch jghgc gfhgfhgv tfhgf jhgvhgvhgcfg jhgjhgfhtgv"
-        android:padding="8dp"/>
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:id="@+id/list_stat"
-        android:textAlignment="center"
-        android:padding="8dp"
-        android:textAllCaps="true"
-        android:fontFamily="sans-serif-black"
-        android:textColor="@color/colorPrimaryDark"
-        android:text="sent"
-        android:layout_gravity="center_vertical"
-        />
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:padding="8dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/list_date"
+                    android:text="February 31, 2017"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:paddingBottom="4dp"
+                    android:fontFamily="sans-serif-regular"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/list_time"
+                    android:text="09:10 PM"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/list_type"
+                        android:text="Dental"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp"
+                        android:paddingBottom="4dp"
+                        android:fontFamily="sans-serif-regular"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Request Type"
+                        android:textSize="12sp"
+                        android:textAllCaps="true"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:id="@+id/list_stat"
+                    android:padding="8dp"
+                    android:textAllCaps="true"
+                    android:fontFamily="sans-serif-black"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="sent"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/list_apb"
+                    android:lineSpacingExtra="1dp"
+                    android:padding="8dp"
+                    android:textAllCaps="true"
+                    android:fontFamily="sans-serif-black"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="Alpha Hospital One"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</FrameLayout>

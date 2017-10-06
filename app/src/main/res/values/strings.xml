@@ -1,12 +1,24 @@
 <resources>
     <string name="app_name">Sahathana Home Care</string>
 
-    <string name="sign_up_email_hint">Email</string>
-    <string name="sign_up_name_hint">Full Name</string>
-    <string name="sign_up_phno_hint">Phone Number</string>
-    <string name="sign_up_password_hint">Password</string>
+    <string-array name="request_type_array">
+        <item>Medical</item>
+        <item>Orthopedic/Trauma</item>
+        <item>Geriatric</item>
+        <item>Pediatric</item>
+        <item>Physiotherapy</item>
+        <item>Nursing</item>
+        <item>Pre and post delivery care</item>
+    </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="request_type_info_array">
+        <item>Any acute illness which you feel that need immediate attention</item>
+        <item>Any emergency arising from injury to bone, joins, muscles etc</item>
+        <item>Illness associated with old age</item>
+        <item>Illness associated to infant, child and adolescents</item>
+        <item>Rehabilitation after trauma, joint diseases, post surgical care, or any other chronic conditions</item>
+        <item>Nursing assistance for bedridden patients or attending  any other  patient who need medical attention at home</item>
+        <item>Nursing assistance to pregnant ladies  before delivery  and child and mother after the delivery</item>
+    </string-array>
 
 </resources>

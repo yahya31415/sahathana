@@ -37,6 +37,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.vexigon.libraries.onboarding.obj.Page;
+import com.vexigon.libraries.onboarding.ui.models.TopUserBenefitsModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +79,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     // Constants
     public final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
+    boolean waiting = false;
+
     // Do if logged in
     private void loggedIn (FirebaseUser user) {
 
@@ -103,39 +107,29 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         // Change profile details
-        getTextView(R.id.profile_email).setText(currentUser.getEmail());
-        DatabaseReference ref = mDatabase.getReference("user").child(currentUser.getUid());
-        DatabaseReference nameRef = ref.child("name");
-        DatabaseReference phnoRef = ref.child("phno");
-        nameRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                getTextView(R.id.profile_name).setText(dataSnapshot.getValue(String.class));
-            }
+        getTextView(R.id.profile_name).setText(currentUser.getDisplayName());
+        getTextView(R.id.profile_phno).setText(currentUser.getPhoneNumber());
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+        // getTextView(R.id.profile_email).setText(currentUser.getEmail());
 
-            }
-        });
-        phnoRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                getTextView(R.id.profile_phno).setText(dataSnapshot.getValue(String.class));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     // Do if not logged in
     private void notLoggedIn () {
-        Intent intent = new Intent(mContext, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        if(waiting) {
+            Intent intent = new Intent(mContext, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        } else {
+            waiting = true;
+            new TopUserBenefitsModel(this)
+                    .setupSlides(
+                            new Page("Sahathana", "Emergency medical help and governmental medical services at the doorstep of the people", R.drawable.office),
+                            new Page(" ", "A network of selected hospitals will respond the online request made by the patients", R.drawable.office),
+                            new Page(" ", "Apart from the emergency care, community health services like immunization also channelized through this platform", R.drawable.office)
+                    )
+                    .launch();
+        }
     }
 
     // Set location permission granted flag
@@ -282,8 +276,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             Hospital hospital = hospitals.get(i);
             LatLng latLng = new LatLng(hospital.location.lat, hospital.location.lng);
             MarkerOptions markerOptions = new MarkerOptions()
-                    .position(latLng)
-                    .title(hospital.name);
+                    .position(latLng);
             mMap.addMarker(markerOptions);
         }
     }
@@ -329,7 +322,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void request(View view) {
-        Intent intent = new Intent(this, SwipeActivity.class);
+        Intent intent = new Intent(this, RequestActivity.class);
         startActivity(intent);
     }
 

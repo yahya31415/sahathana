@@ -6,7 +6,6 @@ package co.cropbit.sahathanahomecare.model;
 
 public class Hospital {
 
-    public String name;
     public String address;
     public Location location;
 
@@ -14,8 +13,7 @@ public class Hospital {
 
     }
 
-    Hospital (String name, String address, Location location) {
-        this.name = name;
+    Hospital (String address, Location location) {
         this.address = address;
         this.location = location;
     }

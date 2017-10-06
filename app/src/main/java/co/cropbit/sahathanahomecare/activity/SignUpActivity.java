@@ -2,14 +2,18 @@ package co.cropbit.sahathanahomecare.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 
 import co.cropbit.sahathanahomecare.R;
@@ -19,10 +23,7 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
 
-    private String email;
-    private String password;
     private String name;
-    private String phno;
 
     private Context context;
 
@@ -35,17 +36,19 @@ public class SignUpActivity extends AppCompatActivity {
         context = this;
     }
 
-    public void signUp(View view) {
-        email = ((EditText) findViewById(R.id.sign_up_email)).getText().toString();
-        password = ((EditText) findViewById(R.id.sign_up_password)).getText().toString();
-        name = ((EditText) findViewById(R.id.sign_up_name)).getText().toString();
-        phno = ((EditText) findViewById(R.id.sign_up_phno)).getText().toString();
-        mAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+    public void login(View view) {
+        name = ((EditText) findViewById(R.id.login_name)).getText().toString();
+
+        mAuth.getCurrentUser().updateProfile(
+                new UserProfileChangeRequest.Builder()
+                        .setDisplayName(name)
+                        .build()
+        ).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onSuccess(AuthResult authResult) {
-                mDatabase.getReference("user").child(authResult.getUser().getUid()).child("name").setValue(name);
-                mDatabase.getReference("user").child(authResult.getUser().getUid()).child("phno").setValue(phno);
+            public void onComplete(@NonNull Task<Void> task) {
+                mDatabase.getReference("users").child(mAuth.getCurrentUser().getUid()).child("name").setValue(name);
                 Intent intent = new Intent(context, HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });

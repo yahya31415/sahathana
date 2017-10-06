@@ -17,6 +17,14 @@
         {
           "client_id": "158827905925-bft1ns9d65eskqc46thjd39otuarjh50.apps.googleusercontent.com",
           "client_type": 3
+        },
+        {
+          "client_id": "158827905925-d8t02p6emspdqe205icj66eilj0md3k5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.cropbit.sahathanahomecare",
+            "certificate_hash": "48fedf14cfb8a4ef018a1aea32c519f493881a53"
+          }
         }
       ],
       "api_key": [
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "158827905925-bft1ns9d65eskqc46thjd39otuarjh50.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
