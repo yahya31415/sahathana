@@ -16,13 +16,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Request"
+            android:text="@string/new_confirm_title_1"
             android:textSize="20sp"
             android:textColor="@android:color/white"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sent"
+            android:text="@string/new_confirm_title_2"
             android:textSize="32sp"
             android:fontFamily="sans-serif-black"
             android:textColor="@android:color/white"/>
@@ -36,7 +36,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="We will get back to you shortly"
+            android:text="@string/new_confirm_string"
             android:textSize="20sp"
             android:lineSpacingExtra="6dp"
             android:textColor="@android:color/white"/>
@@ -50,7 +50,7 @@
             android:backgroundTint="@android:color/white"
             android:textColor="@color/colorPrimaryDark"
             android:elevation="4dp"
-            android:text="Go To Home"
+            android:text="@string/new_confirm_button"
             android:onClick="home"/>
     </LinearLayout>
 </LinearLayout>

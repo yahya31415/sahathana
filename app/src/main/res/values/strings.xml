@@ -1,5 +1,40 @@
 <resources>
     <string name="app_name">Sahathana Home Care</string>
+    <string name="app_title">Sahathana</string>
+
+    <string name="app_subtitle">Government medical services provided to your doorstep</string>
+    
+    <string name="onboarding_string_1">Emergency medical help and governmental medical services at the doorstep of the people</string>
+    <string name="onboarding_string_2">A network of selected hospitals will respond the online request made by the patients</string>
+    <string name="onboarding_string_3">Apart from the emergency care, community health services like immunization also channelized through this platform</string>
+    <string name="onboarding_button">GET STARTED</string>
+
+    <string name="login_label">Login to request medical care</string>
+    <string name="login_hint_phno">Mobile Number</string>
+    <string name="login_button_phno">Send OTP</string>
+    <string name="login_hint_otp">OTP</string>
+    <string name="login_button_otp">Verify OTP</string>
+    <string name="login_hint_name">Full Name</string>
+    <string name="login_button_name">Login</string>
+
+    <string name="home_title_hospitals">Hospitals</string>
+    <string name="home_title_profile">Profile</string>
+    <string name="home_hint_name">Name</string>
+    <string name="home_hint_phno">Mobile</string>
+    <string name="home_button_requests">View Requests</string>
+    <string name="home_button_logout">Logout</string>
+
+    <string name="requests_title">My Requests</string>
+    <string name="requests_label_type">Request Type</string>
+
+    <string name="new_title">Select Treatment Type</string>
+    <string name="new_confirm_msg">Are you sure you want to send this request?</string>
+    <string name="new_button_send">Send</string>
+
+    <string name="new_confirm_title_1">Request</string>
+    <string name="new_confirm_title_2">Sent</string>
+    <string name="new_confirm_string">We will get back to you shortly</string>
+    <string name="new_confirm_button">Go To Home</string>
 
     <string-array name="request_type_array">
         <item>Medical</item>

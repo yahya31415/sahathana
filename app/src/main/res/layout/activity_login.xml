@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login to request medical care"
+            android:text="@string/login_label"
             android:alpha="0.56"
             android:textSize="14sp"
             android:textColor="@android:color/black"/>
@@ -28,7 +28,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Mobile Number"
+            android:hint="@string/login_hint_phno"
             android:fontFamily="sans-serif-light"
             android:textSize="20sp"
             android:alpha="0.87"
@@ -46,7 +46,7 @@
             android:backgroundTint="@color/colorPrimary"
             android:textColor="@color/colorBackground"
             android:elevation="4dp"
-            android:text="Send OTP"
+            android:text="@string/login_button_phno"
             android:onClick="login"
             android:id="@+id/login_button"/>
     </LinearLayout>

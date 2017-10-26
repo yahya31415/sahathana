@@ -15,7 +15,7 @@
         <activity android:name=".activity.LoginActivity" />
         <activity
             android:name=".activity.HomeActivity"
-            android:label="Sahathana">
+            android:theme="@style/HomeTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,8 +29,8 @@
 
         <activity
             android:name=".activity.ListActivity"
-            android:label="My Requests"/>
-        <activity android:name=".activity.RequestActivity" android:label="Select Treatment Type" />
+            android:label="@string/requests_title"/>
+        <activity android:name=".activity.RequestActivity" android:label="@string/new_title" />
         <activity android:name=".activity.SentActivity" android:theme="@style/HomeTheme.NoActionBar"></activity>
 
         <activity

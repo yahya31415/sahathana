@@ -226,19 +226,11 @@ public class RequestActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     type = titles[recyclerView.indexOfChild(view)];
-                    isEmergency = false;
-
-                    CharSequence[] items = {"Check if this is an emergency request?"};
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle(type)
-                            .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                                    isEmergency = b;
-                                }
-                            })
-                            .setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                            .setMessage(getString(R.string.new_confirm_msg))
+                            .setPositiveButton(getString(R.string.new_button_send), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     if(mLastKnownLocation == null) {
@@ -247,7 +239,7 @@ public class RequestActivity extends AppCompatActivity {
                                         request.datetime = new Date().getTime();
                                         request.status = Request.SENT;
                                         request.type = type;
-                                        request.isEmergency = isEmergency;
+                                        request.isEmergency = false;
                                         waiting_list.add(request);
                                     } else {
                                         co.cropbit.sahathanahomecare.model.Location location = new co.cropbit.sahathanahomecare.model.Location(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
@@ -256,7 +248,7 @@ public class RequestActivity extends AppCompatActivity {
                                         request.location = location;
                                         request.datetime = new Date().getTime();
                                         request.type = type;
-                                        request.isEmergency = isEmergency;
+                                        request.isEmergency = false;
                                         database.getReference("requests").child(mAuth.getCurrentUser().getUid()).push().setValue(request).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {

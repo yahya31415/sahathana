@@ -87,8 +87,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     OTPSent = true;
 
-                    ((Button) findViewById(R.id.login_button)).setText("Verify OTP");
-                    ((EditText) findViewById(R.id.login_phno)).setText("");
+                    ((Button) findViewById(R.id.login_button)).setText(getString(R.string.login_button_otp));
+                    ((EditText) findViewById(R.id.login_phno)).setHint(getString(R.string.login_hint_otp));
                 }
             });
         } else {

@@ -124,9 +124,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             waiting = true;
             new TopUserBenefitsModel(this)
                     .setupSlides(
-                            new Page("Sahathana", "Emergency medical help and governmental medical services at the doorstep of the people", R.drawable.office),
-                            new Page(" ", "A network of selected hospitals will respond the online request made by the patients", R.drawable.office),
-                            new Page(" ", "Apart from the emergency care, community health services like immunization also channelized through this platform", R.drawable.office)
+                            new Page(getString(R.string.app_title), getString(R.string.onboarding_string_1), getString(R.string.onboarding_button), R.drawable.office),
+                            new Page(" ", getString(R.string.onboarding_string_2), getString(R.string.onboarding_button), R.drawable.office),
+                            new Page(" ", getString(R.string.onboarding_string_3), getString(R.string.onboarding_button), R.drawable.office)
                     )
                     .launch();
         }
