@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -26,7 +25,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,17 +34,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.vexigon.libraries.onboarding.obj.Page;
 import com.vexigon.libraries.onboarding.ui.models.TopUserBenefitsModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import co.cropbit.sahathanahomecare.HistoryActivity;
 import co.cropbit.sahathanahomecare.R;
-import co.cropbit.sahathanahomecare.RequestAdapter;
+import co.cropbit.sahathanahomecare.TreatmentRequestActivity;
 import co.cropbit.sahathanahomecare.model.Hospital;
-import co.cropbit.sahathanahomecare.model.Request;
 
 public class HomeActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -89,7 +86,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Change button text and action
         Button button = (Button) findViewById(R.id.profile_action);
-        button.setText("Logout");
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,7 +97,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         gButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent listIntent = new Intent(mContext, ListActivity.class);
+                Intent listIntent = new Intent(mContext, HistoryActivity.class);
                 startActivity(listIntent);
             }
         });
@@ -274,7 +270,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void drawMarkers() {
         for(int i=0; i<hospitals.size(); i++) {
             Hospital hospital = hospitals.get(i);
-            LatLng latLng = new LatLng(hospital.location.lat, hospital.location.lng);
+            LatLng latLng = new LatLng(hospital.getLocation().lat, hospital.getLocation().lng);
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng);
             mMap.addMarker(markerOptions);
@@ -322,7 +318,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void request(View view) {
-        Intent intent = new Intent(this, RequestActivity.class);
+        Intent intent = new Intent(this, TreatmentRequestActivity.class);
         startActivity(intent);
     }
 

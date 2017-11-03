@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "co.cropbit.sahathanahomecare"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 4
-        versionName "Beta"
+        versionCode 80
+        versionName "0.8.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -37,6 +37,7 @@ dependencies {
     compile 'com.github.Vexigon:Material-Onboarding:v1.1.1'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 
 
@@ -49,4 +50,7 @@ dependencies {
 
 
 
+
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'

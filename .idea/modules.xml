@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SahathanaHomeCare.iml" filepath="$PROJECT_DIR$/SahathanaHomeCare.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/sahathana-android.iml" filepath="$PROJECT_DIR$/sahathana-android.iml" />
     </modules>

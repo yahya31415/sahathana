@@ -1,19 +1,16 @@
 <resources>
-    <string name="app_name">Sahathana Home Care</string>
-    <string name="app_title">Sahathana</string>
 
     <string name="app_subtitle">Government medical services provided to your doorstep</string>
-    
+
     <string name="onboarding_string_1">Emergency medical help and governmental medical services at the doorstep of the people</string>
     <string name="onboarding_string_2">A network of selected hospitals will respond the online request made by the patients</string>
     <string name="onboarding_string_3">Apart from the emergency care, community health services like immunization also channelized through this platform</string>
     <string name="onboarding_button">GET STARTED</string>
 
-    <string name="login_label">Login to request medical care</string>
-    <string name="login_hint_phno">Mobile Number</string>
-    <string name="login_button_phno">Send OTP</string>
+
+
     <string name="login_hint_otp">OTP</string>
-    <string name="login_button_otp">Verify OTP</string>
+
     <string name="login_hint_name">Full Name</string>
     <string name="login_button_name">Login</string>
 
@@ -21,8 +18,8 @@
     <string name="home_title_profile">Profile</string>
     <string name="home_hint_name">Name</string>
     <string name="home_hint_phno">Mobile</string>
-    <string name="home_button_requests">View Requests</string>
-    <string name="home_button_logout">Logout</string>
+    <string name="home_button_requests">View Previous Requests</string>
+    <string name="home_button_logout">Log Out</string>
 
     <string name="requests_title">My Requests</string>
     <string name="requests_label_type">Request Type</string>
@@ -54,6 +51,54 @@
         <item>Rehabilitation after trauma, joint diseases, post surgical care, or any other chronic conditions</item>
         <item>Nursing assistance for bedridden patients or attending  any other  patient who need medical attention at home</item>
         <item>Nursing assistance to pregnant ladies  before delivery  and child and mother after the delivery</item>
+    </string-array>
+
+    <string name="app_title">Sahathana</string>
+    <string name="app_name">Sahathana Home Care</string>
+    <string name="treatment_request_hint">Select Treatment Type</string>
+    <string name="treatment_request_confirm_message">Are you sure you want to send this request?</string>
+    <string name="treatment_request_confirm_action">Yes</string>
+
+    <string name="menu_profile">Profile</string>
+    <string name="profile_name">Name</string>
+    <string name="profile_phno">Mobile</string>
+    <string name="profile_logout">Log Out</string>
+
+    <string name="history_title">Past Requests</string>
+
+    <string name="login_label">Login to Sahathana Home Care</string>
+    <string name="login_hint_phno">Mobile Number</string>
+    <string name="login_button_phno">Send OTP</string>
+    <string name="login_button_otp">Verify</string>
+
+    <string name="login_terms">By signing up, you agree to our terms and privacy policy</string>
+
+    <string-array name="country_codes">
+        <item>+966</item>
+        <item>+91</item>
+    </string-array>
+
+    <string name="profile_hospital">Default Hospital</string>
+
+    <string-array name="treatment_type_array">
+        <item>Medical</item>
+        <item>Orthopedic or Trauma</item>
+        <item>Geriatric</item>
+        <item>Pediatric</item>
+        <item>Physiotherapy</item>
+        <item>Nursing</item>
+        <item>Pre and post delivery care</item>
+        <item>Laboratoty Services</item>
+    </string-array>
+    <string-array name="treatment_type_info_array">
+        <item>Any illness which you feel, that can be treated at home</item>
+        <item>Any minor injuries to bone, joins, muscles etc which can be treated at home</item>
+        <item>Illness associated with old age</item>
+        <item>Illness associated to infant, child and adolescents</item>
+        <item>Rehabilitation after trauma, joint diseases, post surgical care, or any other chronic conditions</item>
+        <item>Nursing assistance for bedridden patients or attending  any other  patient who need medical attention at home</item>
+        <item>Nursing assistance to pregnant ladies  before delivery  and child and mother after the delivery on daily visit basis</item>
+        <item>Sample for your laboratory test will be collected from your home by technician from nearest lab in our network to your location.You have to send a request at least  12hrs prior to your required  sample collection time</item>
     </string-array>
 
 </resources>
