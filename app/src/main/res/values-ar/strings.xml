@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_subtitle">الخدمات الطبية الحكومية المقدمة إلى عتبة داركم</string>
+
+    <string name="onboarding_string_1">الصفحة الاولي:  تعرض خدمات الطوارئ والخدمات الطبية الحكومية على عتبة باب المريض.</string>
+    <string name="onboarding_string_2">الصفحة الثانية:  ستستجيب شبكة من المستشفيات المختارة للطلب الإلكتروني الذي يقدمه المريض.</string>
+    <string name="onboarding_string_3">الصفحة الثالثة: الحدمات الاخري مثل الصحية المجتمعية ، التحصين . ايضا يتم تق\يمها من هلال التطبيق.</string>
+    <string name="onboarding_button">البدء</string>
+
+
+    <string name="login_hint_name">اسم</string>
+    <string name="login_button_name">تسجيل الدخول</string>
+
+    <string name="new_confirm_msg">هل أنت واثق؟</string>
+
+    <string name="new_confirm_title_1">طلب</string>
+    <string name="new_confirm_title_2">أرسلت</string>
+
+
+    <string name="home_title_profile">الملف الشخصي</string>
+    <string name="home_button_requests">عرض الطلب</string>
+    <string name="home_button_logout">خروج</string>
+    <string name="new_button_send">إرسال الطلب</string>
+    <string name="new_title">حدد النوع</string>
+    <string name="new_confirm_string">سوف نعود اليكم لاحقا</string>
+    <string name="new_confirm_button">العودة للرئيسية</string>
+
+    <string-array name="request_type_array">
+        <item>الحالة الطبية</item>
+        <item>العظام / الصدمات والحوادث</item>
+        <item>الشيخوخة</item>
+        <item>اخصائي اطفال</item>
+        <item>العلاج الطبيعي</item>
+        <item>التمريض</item>
+        <item>خدمات رعاية الحوامل (قبل وبعد الولادة)</item>
+    </string-array>
+
+    <string-array name="request_type_info_array">
+        <item>أي مرض حاد تشعر أنك بحاجة إلى اهتمام ورعاية فورية</item>
+        <item>أي حالة طوارئ تنشأ عن إصابة العظام، او العضلات وغيرها</item>
+        <item>المرض المرتبط بالشيخوخة</item>
+        <item>كل الامراض التي تصيب الاطفال والرضع والمراهقين</item>
+        <item>إعادة التأهيل بعد الحوادث و الصدمات ، اراض المفاصل والعظام ، علاج طبيعي بعد العمليات الجراحية ، أو أي حالات مزمنة أخرى</item>
+        <item>خدمة التمريض المنزلي لمساعدة المرضى طريح الفراش  او أي مريض آخر يحتاج إلى عناية طبية بالمنزل</item>
+        <item>تثديم خدمات التمريض للنساء الحوامل قبل الولادة و خدمات التمريض للطفل والأم بعد الولادة</item>
+    </string-array>
+
+
+    <string name="app_name">صحتنا</string>
+    <string name="app_title">صحتنا</string>
+    <string name="treatment_request_hint">حدد النوع</string>
+    <string name="treatment_request_confirm_message">هل أنت واثق؟</string>
+    <string name="treatment_request_confirm_action">إرسال الطلب</string>
+
+    <string name="menu_profile">الملف الشخصي</string>
+    <string name="profile_name">اسم</string>
+    <string name="profile_phno">رقم الجوال</string>
+    <string name="profile_logout">خروج</string>
+
+    <string name="history_title">عرض الطلب</string>
+
+    <string name="login_label">تسجيل الدخول لطلب الرعاية الطبية</string>
+    <string name="login_button_phno">إرسال</string>
+    <string name="login_hint_phno">رقم الجوال</string>
+    <string name="login_button_otp">التحقق</string>
+
+    <string-array name="treatment_type_array">
+        <item>الحالة الطبية</item>
+        <item>العظام / الصدمات والحوادث</item>
+        <item>الشيخوخة</item>
+        <item>اخصائي اطفال</item>
+        <item>العلاج الطبيعي</item>
+        <item>التمريض</item>
+        <item>خدمات رعاية الحوامل (قبل وبعد الولادة)</item>
+    </string-array>
+    <string-array name="treatment_type_info_array">
+        <item>أي مرض حاد تشعر أنك بحاجة إلى اهتمام ورعاية فورية</item>
+        <item>أي حالة طوارئ تنشأ عن إصابة العظام، او العضلات وغيرها</item>
+        <item>المرض المرتبط بالشيخوخة</item>
+        <item>كل الامراض التي تصيب الاطفال والرضع والمراهقين</item>
+        <item>إعادة التأهيل بعد الحوادث و الصدمات ، اراض المفاصل والعظام ، علاج طبيعي بعد العمليات الجراحية ، أو أي حالات مزمنة أخرى</item>
+        <item>خدمة التمريض المنزلي لمساعدة المرضى طريح الفراش  او أي مريض آخر يحتاج إلى عناية طبية بالمنزل</item>
+        <item>تثديم خدمات التمريض للنساء الحوامل قبل الولادة و خدمات التمريض للطفل والأم بعد الولادة</item>
+    </string-array>
+</resources>

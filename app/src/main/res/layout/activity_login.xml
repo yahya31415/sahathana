@@ -1,53 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="co.cropbit.sahathanahomecare.activity.LoginActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.cropbit.sahathanahomecare.activity.LoginActivity"
-    android:orientation="vertical"
     android:background="@color/colorBackground"
-    android:padding="16dp">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="16dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login to request medical care"
-            android:alpha="0.56"
-            android:textSize="14sp"
-            android:textColor="@android:color/black"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp">
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Mobile Number"
-            android:fontFamily="sans-serif-light"
-            android:textSize="20sp"
-            android:alpha="0.87"
-            android:backgroundTint="@android:color/transparent"
-            android:textColorHint="@android:color/black"
-            android:textColor="@android:color/black"
-            android:id="@+id/login_phno"/>
-    </LinearLayout>
-    <LinearLayout
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_height="360dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColor="@color/colorBackground"
-            android:elevation="4dp"
-            android:text="Send OTP"
-            android:onClick="login"
-            android:id="@+id/login_button"/>
-    </LinearLayout>
-</LinearLayout>
+            android:layout_height="match_parent"
+            app:toolbarId="@+id/toolbarProfile"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Headline"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleMarginEnd="64dp">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/login_header"
+                    android:scaleType="centerCrop"
+                    android:fitsSystemWindows="true"/>
+            </FrameLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbarProfile"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin"/>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/colorBackground"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/colorBackground"
+            android:padding="16dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_label"
+                    android:alpha="0.56"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/country_code"></Spinner>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/login_hint_phno"
+                    android:fontFamily="sans-serif-light"
+                    android:alpha="0.87"
+                    android:backgroundTint="@android:color/transparent"
+                    android:textColorHint="#a1000000"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:id="@+id/login_phno"
+                    android:inputType="phone"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:textColor="@color/colorBackground"
+                    android:elevation="4dp"
+                    android:text="@string/login_button_phno"
+                    android:onClick="login"
+                    android:id="@+id/login_button"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/login_terms"
+                android:gravity="center"
+                android:padding="32dp"/>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

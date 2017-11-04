@@ -15,16 +15,32 @@
       },
       "oauth_client": [
         {
-          "client_id": "158827905925-bft1ns9d65eskqc46thjd39otuarjh50.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "158827905925-d8t02p6emspdqe205icj66eilj0md3k5.apps.googleusercontent.com",
+          "client_id": "158827905925-qsg6eg80kl224pq33rfpcissp51ip2bi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "co.cropbit.sahathanahomecare",
             "certificate_hash": "48fedf14cfb8a4ef018a1aea32c519f493881a53"
           }
+        },
+        {
+          "client_id": "158827905925-tjv3sft3vc496628hrpd7s8atlc3onov.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.cropbit.sahathanahomecare",
+            "certificate_hash": "77fd30db3b21d8c2c69c66b548a268640c95a73c"
+          }
+        },
+        {
+          "client_id": "158827905925-ls0ktb2g23fsj4lai7m7828d80p7enhs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.cropbit.sahathanahomecare",
+            "certificate_hash": "826be5ebaa3b4b23e164663b6ac183d715d8763e"
+          }
+        },
+        {
+          "client_id": "158827905925-bft1ns9d65eskqc46thjd39otuarjh50.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
