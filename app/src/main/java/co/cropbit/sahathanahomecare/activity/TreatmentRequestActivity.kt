@@ -1,4 +1,4 @@
-package co.cropbit.sahathanahomecare
+package co.cropbit.sahathanahomecare.activity
 
 import android.app.Activity
 import android.content.Context
@@ -13,13 +13,15 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
-import android.widget.TextView
+import android.widget.*
+import co.cropbit.sahathanahomecare.R
+import co.cropbit.sahathanahomecare.model.Hospital
 
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationRequest
@@ -30,52 +32,62 @@ import com.google.firebase.database.FirebaseDatabase
 import java.util.ArrayList
 import java.util.Date
 
-import co.cropbit.sahathanahomecare.activity.LoginActivity
-import co.cropbit.sahathanahomecare.activity.SentActivity
 import co.cropbit.sahathanahomecare.model.Request
+import co.cropbit.sahathanahomecare.model.User
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.vexigon.libraries.onboarding.obj.Page
+import com.vexigon.libraries.onboarding.ui.models.TopUserBenefitsModel
+import kotlinx.android.synthetic.main.activity_treatment_request.*
+import kotlinx.android.synthetic.main.treatment_confirm_dialog.*
 import kotlinx.android.synthetic.main.treatment_type_list_item.view.*
 
 class TreatmentRequestActivity : AppCompatActivity() {
 
-    private var mLocationPermissionGranted: Boolean = false
-    private var mLastKnownLocation: Location? = null
+    var mLocationPermissionGranted: Boolean = false
+    var mLastKnownLocation: Location? = null
     val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
-    private var mGoogleApiClient: GoogleApiClient? = null
-
-    internal val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    internal val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-
-    internal var waiting_list: MutableList<Request> = ArrayList()
-
-    internal var adapter: RequestTypeAdapter = RequestTypeAdapter()
-
-    val treatmentTypes: Array<String>
-        get() = resources.getStringArray(R.array.treatment_type_array)
-
-    val treatmentInfos: Array<String>
-        get() = resources.getStringArray(R.array.treatment_type_info_array)
-
-    private val treatmentTypeListView: RecyclerView
-        get() = findViewById<View>(R.id.treatment_types) as RecyclerView
-
+    var mGoogleApiClient: GoogleApiClient? = null
+    val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    var waiting_list: MutableList<Request> = ArrayList()
+    var adapter: RequestTypeAdapter = RequestTypeAdapter()
+    val treatmentTypes
+            get() = resources.getStringArray(R.array.treatment_type_array)
+    val treatmentInfos
+            get() = resources.getStringArray(R.array.treatment_type_info_array)
     val treatmentRequestActivityContext: Context
         get() = this
-
-    private val layoutManager: RecyclerView.LayoutManager
-        get() = LinearLayoutManager(treatmentRequestActivityContext)
-
+    val layoutManager
+        get() = LinearLayoutManager(this)
     var selectedType = "UNSET"
     var lastRadio: RadioButton? = null
+    var waiting = false
+
+    var nearbyHospitals: ArrayList<Hospital>? = null
+    val nearbyHospitalNames = ArrayList<String>()
+    var hospitalAdapter: ArrayAdapter<String>? = null
+    var firstTime = true
+    var defaultHospital: Hospital? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_treatment_request)
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
-        treatmentTypeListView.isFocusable = false
-        treatmentTypeListView.adapter = getAdapter()
-        treatmentTypeListView.layoutManager = layoutManager
+        treatment_types.isFocusable = false
+        treatment_types.adapter = adapter
+        treatment_types.layoutManager = layoutManager
+
+        hospitalAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nearbyHospitalNames)
+        hospitalAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        Hospital.nearbyHospitals { nh ->
+            nearbyHospitals = nh
+            nh.forEach({ hospital ->
+                nearbyHospitalNames.add(hospital.displayName)
+                hospitalAdapter?.notifyDataSetChanged()
+            })
+        }
 
         mGoogleApiClient = GoogleApiClient.Builder(this)
                 .enableAutoManage(this) { }
@@ -94,9 +106,37 @@ class TreatmentRequestActivity : AppCompatActivity() {
 
         mAuth.addAuthStateListener { firebaseAuth ->
             if (firebaseAuth.currentUser == null) {
+                if(waiting) {
+                    val intent = Intent(treatmentRequestActivityContext, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    treatmentRequestActivityContext.startActivity(intent)
+                } else {
+                    waiting = true
+                    TopUserBenefitsModel(this)
+                            .setupSlides(
+                                    Page(getString(R.string.app_title), getString(R.string.onboarding_string_1), getString(R.string.onboarding_button), R.drawable.office),
+                                    Page(" ", getString(R.string.onboarding_string_2), getString(R.string.onboarding_button), R.drawable.office),
+                                    Page(" ", getString(R.string.onboarding_string_3), getString(R.string.onboarding_button), R.drawable.office)
+                            )
+                            .launch()
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(mAuth!!.currentUser == null) {
+            if(waiting) {
                 val intent = Intent(treatmentRequestActivityContext, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 treatmentRequestActivityContext.startActivity(intent)
+            }
+        } else {
+            User.fromId(mAuth.currentUser!!.uid) { user ->
+                if(user.defaultHospital != null) {
+                    defaultHospital = user.defaultHospital!!
+                }
             }
         }
     }
@@ -121,7 +161,7 @@ class TreatmentRequestActivity : AppCompatActivity() {
                         val request = waiting_list[i]
                         val loc = co.cropbit.sahathanahomecare.model.Location(mLastKnownLocation!!.latitude, mLastKnownLocation!!.longitude)
                         request.location = loc
-                        database.getReference("requests").child(mAuth.currentUser!!.uid).push().setValue(request).addOnSuccessListener {
+                        request.push {
                             val intent = Intent(treatmentRequestActivityContext, SentActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
@@ -141,11 +181,7 @@ class TreatmentRequestActivity : AppCompatActivity() {
         return mLocationRequest
     }
 
-    private fun getAdapter(): RequestTypeAdapter {
-        return adapter
-    }
-
-    internal inner class RequestTypeAdapter : RecyclerView.Adapter<RequestTypeAdapter.ViewHolder>() {
+    inner class RequestTypeAdapter : RecyclerView.Adapter<RequestTypeAdapter.ViewHolder>() {
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             var treatmentType: TextView
@@ -157,14 +193,15 @@ class TreatmentRequestActivity : AppCompatActivity() {
                 treatmentType = itemView.findViewById<View>(R.id.treatment_type) as TextView
                 treatmentInfo = itemView.findViewById<View>(R.id.treatment_info) as TextView
                 selected = itemView.findViewById<View>(R.id.selected) as RadioButton
+                selected.isClickable = false
             }
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RequestTypeAdapter.ViewHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val thisItemsView = LayoutInflater.from(treatmentRequestActivityContext).inflate(R.layout.treatment_type_list_item,
                     parent, false)
             thisItemsView.setOnClickListener { view ->
-                val type = treatmentTypes[treatmentTypeListView.indexOfChild(view)]
+                val type = treatmentTypes[treatment_types.indexOfChild(view)]
 
                 lastRadio?.isChecked = false
                 lastRadio = thisItemsView.selected
@@ -174,7 +211,7 @@ class TreatmentRequestActivity : AppCompatActivity() {
             return ViewHolder(thisItemsView)
         }
 
-        override fun onBindViewHolder(holder: RequestTypeAdapter.ViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             // Set item views based on your views and data model
             val textView = holder.treatmentType
             textView.text = treatmentTypes[position]
@@ -196,7 +233,6 @@ class TreatmentRequestActivity : AppCompatActivity() {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mLocationPermissionGranted = true
-                    getLocation()
                 }
             }
         }
@@ -218,9 +254,12 @@ class TreatmentRequestActivity : AppCompatActivity() {
     }
 
     fun fab(view: View) {
+        var dialogView = LayoutInflater.from(this).inflate(R.layout.treatment_confirm_dialog, null)
+        dialogView.findViewById<Spinner>(R.id.alert_spinner).adapter = hospitalAdapter
+        if (defaultHospital != null) dialogView.findViewById<Spinner>(R.id.alert_spinner).setSelection(nearbyHospitalNames.indexOf(defaultHospital!!.displayName))
+        dialogView.findViewById<TextView>(R.id.alert_title).text = selectedType
         val builder = AlertDialog.Builder(treatmentRequestActivityContext)
-        builder.setTitle(selectedType)
-                .setMessage(getString(R.string.treatment_request_confirm_message))
+        builder.setView(dialogView)
                 .setPositiveButton(getString(R.string.treatment_request_confirm_action)) { dialogInterface, i ->
                     if (mLastKnownLocation == null) {
                         val request = Request()
@@ -228,7 +267,9 @@ class TreatmentRequestActivity : AppCompatActivity() {
                         request.datetime = Date().time
                         request.status = Request.SENT
                         request.type = selectedType
-                        request.isEmergency = false
+                        request.hospital = nearbyHospitals!!.get(nearbyHospitalNames.indexOf(dialogView.findViewById<Spinner>(R.id.alert_spinner).selectedItem.toString())).id
+                        request.status = 0
+                        request.approvedBy = null
                         waiting_list.add(request)
                     } else {
                         val location = co.cropbit.sahathanahomecare.model.Location(mLastKnownLocation!!.latitude, mLastKnownLocation!!.longitude)
@@ -237,8 +278,10 @@ class TreatmentRequestActivity : AppCompatActivity() {
                         request.location = location
                         request.datetime = Date().time
                         request.type = selectedType
-                        request.isEmergency = false
-                        database.getReference("requests").child(mAuth.currentUser!!.uid).push().setValue(request).addOnSuccessListener {
+                        request.hospital = nearbyHospitals!!.get(nearbyHospitalNames.indexOf(dialogView.findViewById<Spinner>(R.id.alert_spinner).selectedItem.toString())).id
+                        request.status = 0
+                        request.approvedBy = null
+                        request.push {
                             val intent = Intent(treatmentRequestActivityContext, SentActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)

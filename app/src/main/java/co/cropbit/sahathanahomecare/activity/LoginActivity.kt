@@ -18,7 +18,6 @@ import com.google.firebase.auth.PhoneAuthProvider
 
 import java.util.concurrent.TimeUnit
 
-import co.cropbit.sahathanahomecare.TreatmentRequestActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -94,7 +93,7 @@ class LoginActivity : AppCompatActivity() {
                     val intent = Intent(mContext, SignUpActivity::class.java)
                     startActivity(intent)
                 } else {
-                    val intent = Intent(mContext, HomeActivity::class.java)
+                    val intent = Intent(mContext, TreatmentRequestActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 }

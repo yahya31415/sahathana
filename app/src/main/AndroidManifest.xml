@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="co.cropbit.sahathanahomecare">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -10,28 +11,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/HomeTheme">
-        <activity android:name=".activity.SignUpActivity" />
-        <activity android:name=".activity.LoginActivity"
-            android:theme="@style/HomeTheme.NoActionBar"/>
+        android:theme="@style/HomeTheme.NoActionBar">
         <activity
-            android:name=".activity.HomeActivity"
-            android:theme="@style/HomeTheme.NoActionBar" />
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAjmKN4bjjwKDTia-iL79XPendKYGx5RYc" />
-
-        <activity
-            android:name=".activity.SentActivity"
-            android:theme="@style/HomeTheme.NoActionBar" />
-        <activity
-            android:name="com.vexigon.libraries.onboarding.ui.activity.UserBenefitsActivity"
-            android:theme="@style/HomeTheme.NoActionBar" />
-        <activity
-            android:name=".TreatmentRequestActivity"
-            android:label="@string/app_name"
-            android:theme="@style/HomeTheme.NoActionBar">
+            android:name=".activity.TreatmentRequestActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,12 +22,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProfileActivity"
-            android:label="@string/menu_profile"
-            android:theme="@style/HomeTheme.NoActionBar" />
-        <activity android:name=".HistoryActivity"
-            android:label="@string/history_title"
-            android:theme="@style/HomeTheme.NoActionBar"></activity>
+            android:name=".activity.SignUpActivity"/>
+        <activity
+            android:name=".activity.LoginActivity"/>
+        <activity
+            android:name=".activity.SentActivity" />
+        <activity
+            android:name="com.vexigon.libraries.onboarding.ui.activity.UserBenefitsActivity" />
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:label="@string/menu_profile" />
+        <activity android:name=".activity.HistoryActivity"
+            android:label="@string/history_title"></activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAjmKN4bjjwKDTia-iL79XPendKYGx5RYc" />
     </application>
 
 </manifest>

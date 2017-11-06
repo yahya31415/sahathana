@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "158827905925-v1cs7k0mk20lnketo197gmb1j8p3853o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.cropbit.sahathanahomecare",
+            "certificate_hash": "280aba8c1b9d3acfeaf25df6ead406b99accf223"
+          }
+        },
+        {
           "client_id": "158827905925-qsg6eg80kl224pq33rfpcissp51ip2bi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
