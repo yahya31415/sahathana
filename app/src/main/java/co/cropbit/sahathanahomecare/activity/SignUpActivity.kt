@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Toast
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -18,32 +19,34 @@ import java.text.SimpleDateFormat
 class SignUpActivity : AppCompatActivity() {
 
     private var mAuth = FirebaseAuth.getInstance()
+    var spinnerAdapter: ArrayAdapter<CharSequence>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-        val spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.login_genders, android.R.layout.simple_spinner_item)
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.login_genders, android.R.layout.simple_spinner_item)
+        spinnerAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         gender_spinner.adapter = spinnerAdapter
     }
 
     fun login(view: View) {
-        var user = User()
-        user.id = mAuth.currentUser!!.uid
-        user.phoneNumber = mAuth.currentUser!!.phoneNumber!!
-        user.displayName = login_name.text.toString()
-        user.gender = gender_spinner.selectedItem.toString()
-        user.dob = SimpleDateFormat("yyyy-mm-dd").parse("${yyyy.text.toString()}-${mm.text.toString()}-${dd.text.toString()}")
+        var name = login_name.text.toString()
+        var gender = gender_spinner.selectedItem.toString()
+        var year = yyyy.text.toString()
+        var month = mm.text.toString()
+        var day = dd.text.toString()
+
+        if(name.isEmpty() || gender.isEmpty() || year.isEmpty() || month.isEmpty() || day.isEmpty()) {
+            Toast.makeText(this, "Error: Blank Fields", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        var user = User(mAuth.currentUser!!.uid, name, gender, SimpleDateFormat("yyyy-mm-dd").parse("$year-$month-$day"), mAuth.currentUser!!.phoneNumber!!)
+
         user.signUp {
-            mAuth.currentUser!!.updateProfile(
-                    UserProfileChangeRequest.Builder()
-                            .setDisplayName(login_name.text.toString())
-                            .build()
-            ).addOnCompleteListener {
-                val intent = Intent(this, TreatmentRequestActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            }
+            val intent = Intent(this, TreatmentRequestActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         }
     }
 }

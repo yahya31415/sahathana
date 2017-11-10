@@ -24,8 +24,8 @@ class LoginActivity : AppCompatActivity() {
 
     private var countryCodeAdapter: ArrayAdapter<CharSequence>? = null
 
-    private var phoneAuthProvider: PhoneAuthProvider? = null
-    private var mAuth: FirebaseAuth? = null
+    val phoneAuthProvider = PhoneAuthProvider.getInstance()
+    val mAuth = FirebaseAuth.getInstance()
     private var mContext: Context? = null
 
     private var mVerificationId: String? = null
@@ -35,9 +35,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mAuth = FirebaseAuth.getInstance()
         mContext = this
-        phoneAuthProvider = PhoneAuthProvider.getInstance()
         setContentView(R.layout.activity_login)
         countryCodeAdapter = ArrayAdapter.createFromResource(this, R.array.country_codes, android.R.layout.simple_spinner_item)
         countryCodeAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -45,31 +43,44 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun login(view: View) {
-        var text = country_code.selectedItem.toString() + login_phno.text.toString()
+        var text = login_phno.text.toString()
+        if(text.isEmpty() || country_code.selectedItem.toString().isEmpty()) {
+            Toast.makeText(this, "Error: Blank Field", Toast.LENGTH_SHORT).show()
+            return
+        }
         if (!OTPSent) {
             Toast.makeText(this, "Sending OTP", Toast.LENGTH_SHORT).show()
-            phoneAuthProvider!!.verifyPhoneNumber(text, 60, TimeUnit.SECONDS, (mContext as Activity?)!!, object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            phoneAuthProvider.verifyPhoneNumber(country_code.selectedItem.toString() + text, 60, TimeUnit.SECONDS, this, object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                 override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-                    mAuth!!.signInWithCredential(phoneAuthCredential).addOnCompleteListener { task ->
-                        val user = task.result.user
+                    mAuth.signInWithCredential(phoneAuthCredential).addOnCompleteListener { task ->
+                        if(task.isSuccessful) {
+                            val user = task.result.user
 
-                        if (user.displayName == null) {
-                            val intent = Intent(mContext, SignUpActivity::class.java)
-                            startActivity(intent)
+                            if (user.displayName == null) {
+                                val intent = Intent(mContext, SignUpActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                            } else {
+                                val intent = Intent(mContext, TreatmentRequestActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                            }
                         } else {
-                            val intent = Intent(mContext, TreatmentRequestActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            startActivity(intent)
+                            val exception = task.exception
+                            Toast.makeText(this@LoginActivity, exception?.message ?: "Unknown Error", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
 
                 override fun onVerificationFailed(e: FirebaseException) {
-                    Log.v("Error", e.message)
+                    Toast.makeText(this@LoginActivity, e.message ?: "Unknown Error", Toast.LENGTH_SHORT).show()
+                    login_phno.text.clear()
                 }
 
                 override fun onCodeSent(verificationId: String?,
                                         token: PhoneAuthProvider.ForceResendingToken?) {
+
+                    Toast.makeText(this@LoginActivity, "OTP Sent", Toast.LENGTH_SHORT).show()
 
                     // Save verification ID and resending token so we can use them later
                     mVerificationId = verificationId
@@ -85,17 +96,23 @@ class LoginActivity : AppCompatActivity() {
             })
         } else {
             Toast.makeText(this, "Verifying OTP", Toast.LENGTH_SHORT).show()
-            val credential = PhoneAuthProvider.getCredential(mVerificationId!!, login_phno.text!!.toString())
-            mAuth!!.signInWithCredential(credential).addOnCompleteListener { task ->
-                val user = task.result.user
+            val credential = PhoneAuthProvider.getCredential(mVerificationId!!, text)
+            mAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+                if(task.isSuccessful) {
+                    val user = task.result.user
 
-                if (user.displayName == null) {
-                    val intent = Intent(mContext, SignUpActivity::class.java)
-                    startActivity(intent)
+                    if (user.displayName == null) {
+                        val intent = Intent(mContext, SignUpActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                    } else {
+                        val intent = Intent(mContext, TreatmentRequestActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                    }
                 } else {
-                    val intent = Intent(mContext, TreatmentRequestActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+                    val exception = task.exception
+                    Toast.makeText(this@LoginActivity, exception?.message ?: "Unknown Error", Toast.LENGTH_SHORT).show()
                 }
             }
         }
