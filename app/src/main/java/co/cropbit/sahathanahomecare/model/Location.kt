@@ -6,16 +6,7 @@ import java.util.HashMap
  * Created by yahya on 01/08/17.
  */
 
-class Location {
-
-    var lat: Double = 0.0
-    var lng: Double = 0.0
-
-    constructor(lat: Double, lng: Double) {
-        this.lat = lat
-        this.lng = lng
-    }
-
+class Location(val lat: Double, val lng: Double) {
 
     fun toMap(): Map<String, Object> {
         var result = HashMap<String, Any>()

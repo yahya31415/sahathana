@@ -1,20 +1,13 @@
 package co.cropbit.sahathanahomecare.model
 
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
 /**
  * Created by yahya on 01/08/17.
  */
 
-class Hospital {
-
-    var address = ""
-    var displayName = ""
-    var email = ""
-    var location = Location(0.0,0.0)
-    var phoneNumber = ""
-    var photoURL = ""
-    var id = ""
+class Hospital(val address: String, val displayName: String, val email: String, val location: Location, val phoneNumber: String, val photoURL: String, val id: String) {
 
     fun toMap(): Map<String, Object> {
         var result = HashMap<String, Any>()
@@ -28,42 +21,35 @@ class Hospital {
     }
 
     companion object {
+        fun fromDoc(doc: DocumentSnapshot): Hospital? {
+            if(doc.contains("address") && doc.contains("location") && doc.contains("displayName") && doc.contains("email") && doc.contains("phoneNumber") && doc.contains("photoURL")) {
+                val locationMap = doc.get("location") as Map<String, Double>
+                val hospital = Hospital(
+                        doc.getString("address"),
+                        doc.getString("displayName"),
+                        doc.getString("email"),
+                        Location(locationMap["lat"] ?: 0.0, locationMap["lng"] ?: 0.0),
+                        doc.getString("phoneNumber"),
+                        doc.getString("photoURL"),
+                        doc.id)
+                return hospital
+            } else {
+                return null
+            }
+        }
+
         fun fromId(id: String, cb: (Hospital) -> Unit) {
             FirebaseFirestore.getInstance().collection("hospitals").document(id).get().addOnSuccessListener { doc ->
-                if(doc.contains("address") && doc.contains("location") && doc.contains("displayName") && doc.contains("email") && doc.contains("phoneNumber") && doc.contains("photoURL")) {
-                    val hospital = Hospital()
-                    hospital.address = doc.getString("address")
-
-                    val locationMap = doc.get("location") as Map<String, Double>
-                    hospital.location = Location(locationMap.get("lat")!!, locationMap.get("lng")!!)
-
-                    hospital.displayName = doc.getString("displayName")
-                    hospital.email = doc.getString("email")
-                    hospital.phoneNumber = doc.getString("phoneNumber")
-                    hospital.photoURL = doc.getString("photoURL")
-
-                    hospital.id = doc.id
-                    cb(hospital)
-                }
+                val hospital = Hospital.fromDoc(doc)
+                if (hospital != null) cb(hospital)
             }
         }
         fun nearbyHospitals(cb: (ArrayList<Hospital>) -> Unit) {
             var result = ArrayList<Hospital>()
             FirebaseFirestore.getInstance().collection("hospitals").get().addOnSuccessListener { snapshot ->
                 snapshot.forEach { doc ->
-                    val hospital = Hospital()
-                    hospital.address = doc.getString("address")
-
-                    val locationMap = doc.get("location") as Map<String, Double>
-                    hospital.location = Location(locationMap.get("lat")!!, locationMap.get("lng")!!)
-
-                    hospital.displayName = doc.getString("displayName")
-                    hospital.email = doc.getString("email")
-                    hospital.phoneNumber = doc.getString("phoneNumber")
-                    hospital.photoURL = doc.getString("photoURL")
-
-                    hospital.id = doc.id
-                    result.add(hospital)
+                    val hospital = Hospital.fromDoc(doc)
+                    if (hospital != null) result.add(hospital)
                 }
                 cb(result)
             }

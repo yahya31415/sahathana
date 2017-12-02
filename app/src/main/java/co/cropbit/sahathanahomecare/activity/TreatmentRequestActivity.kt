@@ -49,34 +49,41 @@ class TreatmentRequestActivity : AppCompatActivity() {
     val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
     var mGoogleApiClient: GoogleApiClient? = null
     val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    var waiting_list: MutableList<Request> = ArrayList()
-    var adapter: RequestTypeAdapter = RequestTypeAdapter()
+    val adapter: RequestTypeAdapter = RequestTypeAdapter()
     val treatmentTypes
             get() = resources.getStringArray(R.array.treatment_type_array)
     val treatmentInfos
             get() = resources.getStringArray(R.array.treatment_type_info_array)
-    val treatmentRequestActivityContext: Context
-        get() = this
-    val layoutManager
-        get() = LinearLayoutManager(this)
     var selectedType = "UNSET"
     var lastRadio: RadioButton? = null
-    var waiting = false
 
     var nearbyHospitals: ArrayList<Hospital>? = null
     val nearbyHospitalNames = ArrayList<String>()
     var hospitalAdapter: ArrayAdapter<String>? = null
-    var firstTime = true
     var defaultHospital: Hospital? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if(mAuth.currentUser == null) {
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            return
+        } else {
+            User.fromId(mAuth.currentUser!!.uid) { user ->
+                if(user.defaultHospital != null) {
+                    defaultHospital = user.defaultHospital!!
+                }
+            }
+        }
+
         setContentView(R.layout.activity_treatment_request)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
         treatment_types.isFocusable = false
         treatment_types.adapter = adapter
-        treatment_types.layoutManager = layoutManager
+        treatment_types.layoutManager = LinearLayoutManager(this)
 
         hospitalAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nearbyHospitalNames)
         hospitalAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -103,50 +110,14 @@ class TreatmentRequestActivity : AppCompatActivity() {
                 .addApi(LocationServices.API)
                 .build()
         mGoogleApiClient!!.connect()
-
-        mAuth.addAuthStateListener { firebaseAuth ->
-            if (firebaseAuth.currentUser == null) {
-                if(waiting) {
-                    val intent = Intent(treatmentRequestActivityContext, LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    treatmentRequestActivityContext.startActivity(intent)
-                } else {
-                    waiting = true
-                    TopUserBenefitsModel(this)
-                            .setupSlides(
-                                    Page(getString(R.string.app_title), getString(R.string.onboarding_string_1), getString(R.string.onboarding_button), R.drawable.office),
-                                    Page(" ", getString(R.string.onboarding_string_2), getString(R.string.onboarding_button), R.drawable.office),
-                                    Page(" ", getString(R.string.onboarding_string_3), getString(R.string.onboarding_button), R.drawable.office)
-                            )
-                            .launch()
-                }
-            }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if(mAuth!!.currentUser == null) {
-            if(waiting) {
-                val intent = Intent(treatmentRequestActivityContext, LoginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                treatmentRequestActivityContext.startActivity(intent)
-            }
-        } else {
-            User.fromId(mAuth.currentUser!!.uid) { user ->
-                if(user.defaultHospital != null) {
-                    defaultHospital = user.defaultHospital!!
-                }
-            }
-        }
     }
 
     private fun getLocation() {
-        if (ContextCompat.checkSelfPermission(treatmentRequestActivityContext.applicationContext,
+        if (ContextCompat.checkSelfPermission(this.applicationContext,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true
         } else {
-            ActivityCompat.requestPermissions(treatmentRequestActivityContext as Activity,
+            ActivityCompat.requestPermissions(this,
                     arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
         }
@@ -156,19 +127,6 @@ class TreatmentRequestActivity : AppCompatActivity() {
 
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, createLocationRequest()) { location ->
                 mLastKnownLocation = location
-                if (waiting_list.size > 0) {
-                    for (i in waiting_list.indices) {
-                        val request = waiting_list[i]
-                        val loc = co.cropbit.sahathanahomecare.model.Location(mLastKnownLocation!!.latitude, mLastKnownLocation!!.longitude)
-                        request.location = loc
-                        request.push {
-                            val intent = Intent(treatmentRequestActivityContext, SentActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            startActivity(intent)
-                        }
-                    }
-                    waiting_list.clear()
-                }
             }
         }
     }
@@ -198,7 +156,7 @@ class TreatmentRequestActivity : AppCompatActivity() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val thisItemsView = LayoutInflater.from(treatmentRequestActivityContext).inflate(R.layout.treatment_type_list_item,
+            val thisItemsView = LayoutInflater.from(this@TreatmentRequestActivity).inflate(R.layout.treatment_type_list_item,
                     parent, false)
             thisItemsView.setOnClickListener { view ->
                 val type = treatmentTypes[treatment_types.indexOfChild(view)]
@@ -258,31 +216,14 @@ class TreatmentRequestActivity : AppCompatActivity() {
         dialogView.findViewById<Spinner>(R.id.alert_spinner).adapter = hospitalAdapter
         if (defaultHospital != null) dialogView.findViewById<Spinner>(R.id.alert_spinner).setSelection(nearbyHospitalNames.indexOf(defaultHospital!!.displayName))
         dialogView.findViewById<TextView>(R.id.alert_title).text = selectedType
-        val builder = AlertDialog.Builder(treatmentRequestActivityContext)
+        val builder = AlertDialog.Builder(this)
         builder.setView(dialogView)
                 .setPositiveButton(getString(R.string.treatment_request_confirm_action)) { dialogInterface, i ->
-                    if (mLastKnownLocation == null) {
-                        val request = Request()
-                        request.uid = mAuth.currentUser!!.uid
-                        request.datetime = Date().time
-                        request.status = Request.SENT
-                        request.type = selectedType
-                        request.hospital = nearbyHospitals!!.get(nearbyHospitalNames.indexOf(dialogView.findViewById<Spinner>(R.id.alert_spinner).selectedItem.toString())).id
-                        request.status = 0
-                        request.approvedBy = null
-                        waiting_list.add(request)
-                    } else {
+                    if (mLastKnownLocation != null) {
                         val location = co.cropbit.sahathanahomecare.model.Location(mLastKnownLocation!!.latitude, mLastKnownLocation!!.longitude)
-                        val request = Request()
-                        request.uid = mAuth.currentUser!!.uid
-                        request.location = location
-                        request.datetime = Date().time
-                        request.type = selectedType
-                        request.hospital = nearbyHospitals!!.get(nearbyHospitalNames.indexOf(dialogView.findViewById<Spinner>(R.id.alert_spinner).selectedItem.toString())).id
-                        request.status = 0
-                        request.approvedBy = null
+                        val request = Request("", mAuth.currentUser!!.uid, location, Date(), 0, selectedType, nearbyHospitals!!.get(nearbyHospitalNames.indexOf(dialogView.findViewById<Spinner>(R.id.alert_spinner).selectedItem.toString())))
                         request.push {
-                            val intent = Intent(treatmentRequestActivityContext, SentActivity::class.java)
+                            val intent = Intent(this, SentActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
                         }

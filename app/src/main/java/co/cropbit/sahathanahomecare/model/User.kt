@@ -54,7 +54,7 @@ class User {
         result.put("gender", gender)
         result.put("dob", dob.time.toString())
         result.put("phoneNumber", phoneNumber)
-        result.put("defaultHospital", defaultHospital?.toMap() ?: "")
+        if (defaultHospital != null) result.put("defaultHospital", defaultHospital!!.toMap())
         return result as Map<String, Object>
     }
 

@@ -6,32 +6,24 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import android.util.Log
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
 
 /**
  * Created by yahya on 02/08/17.
  */
 
-class Request {
-
-    var id = ""
-    var uid = ""
-    var location = Location(0.0,0.0)
-    var datetime: Long = 0
-    var status: Int = 0
-    var type = ""
-    var hospital = ""
-    var approvedBy: String? = null
+class Request(val id: String, val uid: String, val location: Location, val datetime: Date, val status: Int, val type: String, val hospital: Hospital) {
 
     fun toMap(): Map<String, Object> {
         var result = HashMap<String, Any>()
         result.put("uid", uid)
         result.put("location", location.toMap())
-        result.put("datetime", datetime.toString())
+        result.put("datetime", datetime.time.toString())
         result.put("status", status.toString())
         result.put("type", type)
-        result.put("hospital", hospital)
-        if(approvedBy != null) result.put("approvedBy", approvedBy!!)
+        result.put("hospital", hospital.id)
         return result as Map<String, Object>
     }
 
@@ -41,34 +33,24 @@ class Request {
         }
     }
 
-    fun statusString(): String? {
-        when (status) {
-            SENT -> return "Sent"
-            PROCESSING -> return "Processing"
-            APPROVED -> return "Approved"
-        }
-        return null
-    }
-
     companion object {
-        val SENT = 0
-        val PROCESSING = 1
-        val APPROVED = 2
+        fun fromDoc(doc: DocumentSnapshot, cb: (Request) -> Unit) {
+            if (doc.contains("uid") && doc.contains("location") && doc.contains("datetime") && doc.contains("status") && doc.contains("type") && doc.contains("hospital")) {
+                val locationMap = doc.get("location") as Map<String, String>
+                Hospital.fromId(doc.getString("hospital")) { hospital ->
+                    cb(Request(doc.id,
+                            doc.getString("uid"),
+                            Location(locationMap["lat"]?.toDouble() ?: 0.0, locationMap["lng"]?.toDouble() ?: 0.0),
+                            Date(doc.getString("datetime").toLong()),
+                            doc.getString("status").toInt(),
+                            doc.getString("type"),
+                            hospital))
+                }
+            }
+        }
         fun fromId(id: String, cb: (request: Request) -> Unit) {
             FirebaseFirestore.getInstance().collection("requests").document(id).get().addOnSuccessListener { doc ->
-                val request = Request()
-                request.id = id
-                request.uid = doc.getString("uid")
-
-                var l = doc.get("location") as Map<String, String>
-                request.location = Location(l["lat"]!!.toDouble(), l["lng"]!!.toDouble())
-
-                request.datetime = doc.getString("datetime").toLong()
-                request.status = doc.getString("status").toInt()
-                request.type = doc.getString("type")
-                request.hospital = doc.getString("hospital")
-                request.approvedBy = doc.getString("approvedBy")
-                cb(request)
+                Request.fromDoc(doc, cb)
             }
         }
 
@@ -76,32 +58,14 @@ class Request {
             var requests = arrayListOf<Request>()
             FirebaseFirestore.getInstance().collection("requests").whereEqualTo("uid", uid).get().addOnSuccessListener { snapshot ->
                 snapshot.forEach { doc ->
-                    val request = Request()
-                    request.uid = doc.getString("uid")
-
-                    var l = doc.get("location") as Map<String, String>
-                    request.location = Location(l["lat"]!!.toDouble(), l["lng"]!!.toDouble())
-
-                    request.datetime = doc.getString("datetime").toLong()
-                    request.status = doc.getString("status").toInt()
-                    request.type = doc.getString("type")
-                    request.hospital = doc.getString("hospital")
-                    request.approvedBy = doc.getString("approvedBy")
-
-                    requests.add(request)
+                    Request.fromDoc(doc, { request ->
+                        requests.add(request)
+                        if(snapshot.size() == requests.size) {
+                            cb(requests)
+                        }
+                    })
                 }
-                cb(requests)
             }
-        }
-    }
-
-    fun getApprovedStringAsync(cb: (String) -> Unit) {
-        if(approvedBy == null) {
-            cb("Waiting for approval")
-        } else {
-            Hospital.fromId(approvedBy!!, { hospital ->
-                cb(hospital.displayName)
-            })
         }
     }
 }

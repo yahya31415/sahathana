@@ -1,5 +1,6 @@
 package co.cropbit.sahathanahomecare.activity
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -23,7 +24,6 @@ import kotlin.collections.ArrayList
 
 class HistoryActivity : AppCompatActivity() {
 
-    val historyActivityContext = this
     var requests = ArrayList<Request>()
     val mAuth = FirebaseAuth.getInstance()
     val adapter = HistoryAdapter()
@@ -34,6 +34,14 @@ class HistoryActivity : AppCompatActivity() {
         setSupportActionBar(toolbarHistory)
         supportActionBar?.setDisplayShowTitleEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        if(mAuth.currentUser == null) {
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            return
+        }
+
         Request.get(mAuth.currentUser!!.uid, { r ->
             requests = r
             adapter.notifyDataSetChanged()
@@ -63,14 +71,14 @@ class HistoryActivity : AppCompatActivity() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val thisItemsView = LayoutInflater.from(historyActivityContext).inflate(R.layout.history_list_item, parent, false)
+            val thisItemsView = LayoutInflater.from(this@HistoryActivity).inflate(R.layout.history_list_item, parent, false)
             return ViewHolder(thisItemsView)
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             // Set item views based on your views and data model
             val cal = Calendar.getInstance()
-            cal.time = Date(requests.get(position)!!.datetime)
+            cal.time = requests.get(position)?.datetime
 
             val day = cal.get(Calendar.DAY_OF_MONTH)
             val month = DateFormatSymbols().months[cal.get(Calendar.MONTH)]
@@ -80,12 +88,8 @@ class HistoryActivity : AppCompatActivity() {
             holder.day.text = day.toString()
             holder.month.text = month.toString()
             holder.time.text = time.toString()
-            Hospital.fromId(requests.get(position)?.hospital) { hospital ->
-                holder.hospital.text = hospital.displayName
-            }
-            requests.get(position)?.getApprovedStringAsync({approved ->
-                holder.approved.text = approved
-            })
+            holder.hospital.text = requests.get(position)?.hospital.displayName
+            holder.approved.text = if (requests.get(position)?.status == 1) "Approved" else "Waiting for response"
         }
 
         override fun getItemCount(): Int {

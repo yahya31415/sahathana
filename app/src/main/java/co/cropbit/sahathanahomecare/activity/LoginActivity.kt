@@ -15,6 +15,8 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
+import com.vexigon.libraries.onboarding.obj.Page
+import com.vexigon.libraries.onboarding.ui.models.TopUserBenefitsModel
 
 import java.util.concurrent.TimeUnit
 
@@ -35,6 +37,13 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        TopUserBenefitsModel(this)
+                .setupSlides(
+                        Page(getString(R.string.app_title), getString(R.string.onboarding_string_1), getString(R.string.onboarding_button), R.drawable.logo),
+                        Page(" ", getString(R.string.onboarding_string_2), getString(R.string.onboarding_button), R.drawable.office),
+                        Page(" ", getString(R.string.onboarding_string_3), getString(R.string.onboarding_button), R.drawable.office)
+                )
+                .launch()
         mContext = this
         setContentView(R.layout.activity_login)
         countryCodeAdapter = ArrayAdapter.createFromResource(this, R.array.country_codes, android.R.layout.simple_spinner_item)
