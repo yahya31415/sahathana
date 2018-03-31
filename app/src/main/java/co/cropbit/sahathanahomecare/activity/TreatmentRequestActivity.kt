@@ -1,7 +1,5 @@
 package co.cropbit.sahathanahomecare.activity
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -12,7 +10,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
@@ -27,22 +24,22 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 
 import java.util.ArrayList
 import java.util.Date
 
 import co.cropbit.sahathanahomecare.model.Request
 import co.cropbit.sahathanahomecare.model.User
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.vexigon.libraries.onboarding.obj.Page
-import com.vexigon.libraries.onboarding.ui.models.TopUserBenefitsModel
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_treatment_request.*
-import kotlinx.android.synthetic.main.treatment_confirm_dialog.*
 import kotlinx.android.synthetic.main.treatment_type_list_item.view.*
 
-class TreatmentRequestActivity : AppCompatActivity() {
+class TreatmentRequestActivity : AppCompatActivity(), OnMapReadyCallback {
 
     var mLocationPermissionGranted: Boolean = false
     var mLastKnownLocation: Location? = null
@@ -62,8 +59,15 @@ class TreatmentRequestActivity : AppCompatActivity() {
     var hospitalAdapter: ArrayAdapter<String>? = null
     var defaultHospital: Hospital? = null
 
+    var map: GoogleMap? = null
+    var mapFragment: SupportMapFragment? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_treatment_request)
+
+        mapFragment = supportFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment
+        mapFragment?.getMapAsync(this)
 
         if(mAuth.currentUser == null) {
             val intent = Intent(this, LoginActivity::class.java)
@@ -78,9 +82,8 @@ class TreatmentRequestActivity : AppCompatActivity() {
             }
         }
 
-        setContentView(R.layout.activity_treatment_request)
         setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayShowTitleEnabled(true)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
         treatment_types.isFocusable = false
         treatment_types.adapter = adapter
         treatment_types.layoutManager = LinearLayoutManager(this)
@@ -90,10 +93,11 @@ class TreatmentRequestActivity : AppCompatActivity() {
 
         Hospital.nearbyHospitals { nh ->
             nearbyHospitals = nh
-            nh.forEach({ hospital ->
+            nh.forEach({ hospital: Hospital ->
                 nearbyHospitalNames.add(hospital.displayName)
                 hospitalAdapter?.notifyDataSetChanged()
             })
+            loadMarkers()
         }
 
         mGoogleApiClient = GoogleApiClient.Builder(this)
@@ -128,6 +132,8 @@ class TreatmentRequestActivity : AppCompatActivity() {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, createLocationRequest()) { location ->
                 mLastKnownLocation = location
             }
+
+            centerCamera()
         }
     }
 
@@ -137,6 +143,34 @@ class TreatmentRequestActivity : AppCompatActivity() {
         mLocationRequest.fastestInterval = 5000
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         return mLocationRequest
+    }
+
+    override fun onMapReady(p0: GoogleMap?) {
+        this.map = p0
+        if (nearbyHospitals != null && nearbyHospitals!!.size > 0) {
+            loadMarkers()
+            centerCamera()
+        }
+    }
+
+    fun loadMarkers() {
+        nearbyHospitals?.forEach { hospital: Hospital ->
+            this.map?.addMarker(MarkerOptions().position(LatLng(hospital.location.lat, hospital.location.lng)).title(hospital.displayName))
+        }
+    }
+
+    fun centerCamera() {
+        if (mLastKnownLocation != null) {
+            try {
+                this.map?.isMyLocationEnabled = true
+            } catch (exception: SecurityException) {
+                Log.v("Sahathana Exception", exception.localizedMessage)
+            }
+            this.map?.moveCamera(
+                    CameraUpdateFactory
+                            .newLatLngZoom(LatLng(mLastKnownLocation?.latitude!!, mLastKnownLocation?.longitude!!), (13).toFloat())
+            )
+        }
     }
 
     inner class RequestTypeAdapter : RecyclerView.Adapter<RequestTypeAdapter.ViewHolder>() {

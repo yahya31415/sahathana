@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/alert_title"
         android:text="Medical"
+        android:textColor="@color/colorPrimaryDark"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:padding="16dp"/>
     <TextView
@@ -24,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:textColor="@color/colorPrimary"
             android:text="Hospital"
             android:textAppearance="@style/TextAppearance.AppCompat.Menu"/>
         <Spinner

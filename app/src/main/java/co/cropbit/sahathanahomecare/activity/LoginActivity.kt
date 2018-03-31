@@ -39,14 +39,14 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         TopUserBenefitsModel(this)
                 .setupSlides(
-                        Page(getString(R.string.app_title), getString(R.string.onboarding_string_1), getString(R.string.onboarding_button), R.drawable.logo),
-                        Page(" ", getString(R.string.onboarding_string_2), getString(R.string.onboarding_button), R.drawable.office),
-                        Page(" ", getString(R.string.onboarding_string_3), getString(R.string.onboarding_button), R.drawable.office)
-                )
+                        Page(resources.getStringArray(R.array.onboarding_titles)[0], resources.getStringArray(R.array.onboarding_contents)[0], R.drawable.home_image),
+                        Page(resources.getStringArray(R.array.onboarding_titles)[1], resources.getStringArray(R.array.onboarding_contents)[1], R.drawable.hospital_image),
+                        Page(resources.getStringArray(R.array.onboarding_titles)[2], resources.getStringArray(R.array.onboarding_contents)[2], R.drawable.ambulance_image)
+                        )
                 .launch()
         mContext = this
         setContentView(R.layout.activity_login)
-        countryCodeAdapter = ArrayAdapter.createFromResource(this, R.array.country_codes, android.R.layout.simple_spinner_item)
+        countryCodeAdapter = ArrayAdapter.createFromResource(this, R.array.country_codes, R.layout.spinner_item_black)
         countryCodeAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         country_code?.adapter = countryCodeAdapter
     }

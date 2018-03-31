@@ -24,7 +24,7 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-        spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.login_genders, android.R.layout.simple_spinner_item)
+        spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.login_genders, R.layout.spinner_item_black)
         spinnerAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         gender_spinner.adapter = spinnerAdapter
     }

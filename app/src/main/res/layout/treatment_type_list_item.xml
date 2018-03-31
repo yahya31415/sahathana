@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="16dp"
-    android:paddingBottom="16dp"
-    android:background="@drawable/white_background_with_border">
+    android:paddingBottom="16dp">
 
     <RadioButton
         android:id="@+id/selected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:buttonTint="@color/colorPrimaryDark"
         android:layout_margin="16dp"/>
 
     <LinearLayout
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Title"
-            android:alpha="0.84"
+            android:alpha="0.87"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:paddingBottom="8dp"
             />
@@ -36,7 +36,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sub Title"
-            android:alpha="0.57"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             />
     </LinearLayout>

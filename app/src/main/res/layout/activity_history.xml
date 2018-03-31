@@ -29,17 +29,14 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/gradbg"
                 android:fitsSystemWindows="true">
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/history_header"
-                    android:scaleType="centerCrop"
-                    android:fitsSystemWindows="true"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/appbar_gradient_dark"
+                    android:layout_height="112dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/logo_text_white"
+                    android:scaleType="centerInside"
                     android:fitsSystemWindows="true"/>
             </FrameLayout>
             <android.support.v7.widget.Toolbar

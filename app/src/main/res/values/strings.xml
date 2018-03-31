@@ -2,6 +2,18 @@
 
     <string name="app_subtitle">Government medical services provided to your doorstep</string>
 
+    <string-array name="onboarding_titles">
+        <item>Heal at Home</item>
+        <item>Help from the Nearest</item>
+        <item>Immediate Response</item>
+    </string-array>
+
+    <string-array name="onboarding_contents">
+        <item>We Provide medical services at your door stop, at any time of the day</item>
+        <item>Request will be directed to the nearest hospital in Sahanthana network</item>
+        <item>A team of medical professionals will be dispatched immediately to your desired location</item>
+    </string-array>
+
     <string name="onboarding_string_1">Medical help and services at your door step</string>
     <string name="onboarding_string_2">A hospital in our network respond to the request made by the patients</string>
     <string name="onboarding_string_3">After taking necessary details over a phone call they will dispatch a team for medical help/ services which you have requested in the shortest possible time</string>
@@ -66,7 +78,7 @@
 
     <string name="history_title">Past Requests</string>
 
-    <string name="login_label">Login to Sahathana Home Care</string>
+    <string name="login_label">Login</string>
     <string name="login_hint_phno">Mobile Number</string>
     <string name="login_button_phno">Send OTP</string>
     <string name="login_button_otp">Verify</string>

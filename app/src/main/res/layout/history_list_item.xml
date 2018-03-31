@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="October"
+            android:textColor="@color/colorPrimaryDark"
             android:id="@+id/treatment_month"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
     </LinearLayout>
@@ -37,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Title"
+            android:textColor="@color/colorPrimary"
             android:alpha="0.84"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:paddingBottom="8dp"
