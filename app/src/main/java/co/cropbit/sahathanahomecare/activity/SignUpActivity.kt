@@ -44,7 +44,7 @@ class SignUpActivity : AppCompatActivity() {
         var user = User(mAuth.currentUser!!.uid, name, gender, SimpleDateFormat("yyyy-mm-dd").parse("$year-$month-$day"), mAuth.currentUser!!.phoneNumber!!)
 
         user.signUp {
-            val intent = Intent(this, TreatmentRequestActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }

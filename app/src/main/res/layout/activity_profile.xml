@@ -242,17 +242,17 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:backgroundTint="?attr/colorPrimaryDark"
-        android:tint="@android:color/white"
-        app:fabSize="normal"
-        android:clickable="true"
-        android:onClick="gotoHistory"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|right|end"
-        android:src="@drawable/ic_history_black_24dp" />
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/floatingActionButton"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="16dp"-->
+        <!--app:backgroundTint="?attr/colorPrimaryDark"-->
+        <!--android:tint="@android:color/white"-->
+        <!--app:fabSize="normal"-->
+        <!--android:clickable="true"-->
+        <!--android:onClick="gotoHistory"-->
+        <!--app:layout_anchor="@id/appbar"-->
+        <!--app:layout_anchorGravity="bottom|right|end"-->
+        <!--android:src="@drawable/ic_history_black_24dp" />-->
 </android.support.design.widget.CoordinatorLayout>

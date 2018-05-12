@@ -230,20 +230,20 @@ class TreatmentRequestActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.treatment_request_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.profile -> {
-                val intent = Intent(this, ProfileActivity::class.java)
-                startActivity(intent)
-            }
-        }
-        return true
-    }
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        menuInflater.inflate(R.menu.treatment_request_menu, menu)
+//        return true
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.profile -> {
+//                val intent = Intent(this, ProfileActivity::class.java)
+//                startActivity(intent)
+//            }
+//        }
+//        return true
+//    }
 
     fun fab(view: View) {
         var dialogView = LayoutInflater.from(this).inflate(R.layout.treatment_confirm_dialog, null)

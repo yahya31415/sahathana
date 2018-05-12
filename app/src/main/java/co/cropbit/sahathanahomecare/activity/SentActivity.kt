@@ -15,7 +15,7 @@ class SentActivity : AppCompatActivity() {
     }
 
     fun home(view: View) {
-        val intent = Intent(this, TreatmentRequestActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }

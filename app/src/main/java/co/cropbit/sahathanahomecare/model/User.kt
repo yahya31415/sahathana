@@ -18,6 +18,7 @@ class User {
     var gender: String
     var dob: Date
     var phoneNumber: String
+    var androidToken: String? = null
     var defaultHospital: Hospital? = null
 
     constructor(uid: String, name: String, sex: String, date: Date, phone: String) {
@@ -46,6 +47,15 @@ class User {
         FirebaseFirestore.getInstance().collection("users").document(id).set(map as Map<String, Any>, SetOptions.merge()).addOnSuccessListener {
             defaultHospital = hospital
         }
+    }
+
+    fun addToken(token: String) {
+        var map = HashMap<String, Any>()
+        map.put("androidToken", token)
+        FirebaseFirestore.getInstance().collection("users").document(id).set(map as Map<String, Any>, SetOptions.merge())
+                .addOnSuccessListener {
+                    androidToken = token
+                }
     }
 
     fun toMap(): Map<String, Object> {

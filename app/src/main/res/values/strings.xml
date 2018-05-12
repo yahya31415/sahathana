@@ -20,7 +20,6 @@
     <string name="onboarding_button">GET STARTED</string>
 
 
-
     <string name="login_hint_otp">OTP</string>
 
     <string name="login_hint_name">Full Name</string>
@@ -119,4 +118,6 @@
         <item>Female</item>
     </string-array>
     <string name="login_hint_dob">Date Of Birth</string>
+
+    <string name="default_notification_channel_id">sahathana</string>
 </resources>
