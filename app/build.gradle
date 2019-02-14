@@ -2,6 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
+        config {
+            keyAlias 'keystore'
+            keyPassword 'Str--+88'
+            storeFile file('C:/Users/yahya/.keystore/codeworm/keystore.jks')
+            storePassword 'Str--+88'
+        }
     }
     compileSdkVersion 26
     buildToolsVersion '27.0.3'
@@ -18,6 +24,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
         debug {
         }
